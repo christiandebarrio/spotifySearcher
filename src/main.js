@@ -28,7 +28,9 @@ $('#spotify-searcher').on('submit', onSubmit);
 function respondSpotify (artist_obj) {
   $('#content-search').empty();
   artist_obj.artists.items.forEach(function (artist) {    
-    var html = '<li><img src="' + artist.images[0].url + '"/> <span class="artist_name">' + artist.name + '</span></li>';
-    $('#content-search').append(html);
+    if(artist.images.length !== 0) {
+      var html = '<li><aricle class="artist"><img src="' + artist.images[artist.images.length - 1].url + '"/> <span class="artist_name">' + artist.name + '</span></article></li>';
+      $('#content-search').append(html);
+    };
   });
 }
