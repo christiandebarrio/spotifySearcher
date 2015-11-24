@@ -1,13 +1,35 @@
-#content-search img {
-  width: 50px;
-  height: 50px;
+#list {
+  list-style: none;
 }
 
-.artist_name {
-  font-size: 20px;
+.box {
+  width: 15%;
+  height: 240px;
+  padding: 10px;
+  float: left;
+  margin: 20px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 15px;
+  box-shadow: 2px 2px 5px 0 #0C3446;
 }
 
-.artist {
-  border-bottom: 1px solid;
-  margin-top: 50px;
+.data-name h1 {
+  text-align: center;
+  margin-top: 17px;
+  font-size: 16px;
 }
+
+.cover {
+  width: 146px;
+  height: 146px;
+  margin: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 1px 1px 3px 0 #0C3446;
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+}
+
