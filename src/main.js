@@ -32,7 +32,7 @@ function showArtists (artist_obj) {
     if(artist.images.length !== 0) {
       var image = '<div class="cover"><img src="' + artist.images[0].url + '"/></div>'
       var name = '<div class="data-name"><h1>' + artist.name + '</h1></div>'
-      var html = '<li><article class="box"><a href="" class="link link-artist" data-id="' + artist.id + '">' + image + name + '</a></article></li>';
+      var html = '<li><article class="box"><a href="" class="link link-artist" data-id="' + artist.id + '" data-name="' + artist.name + '">' + image + name + '</a></article></li>';
       $('#list').append(html);
     };
   });
@@ -42,12 +42,13 @@ function showArtists (artist_obj) {
 function goArtistPage (event) {
   event.preventDefault();
   var artist_id = event.currentTarget.dataset.id;
+  var artist_name = event.currentTarget.dataset.name;
 
   var request = $.get('https://api.spotify.com/v1/artists/' + artist_id + '/albums');
 
   function onSaveSuccess (response) {
     console.debug('BOOM album', response);
-    showAlbums(response);
+    showAlbums(response, artist_name);
   }
 
   function onSaveFailure (err) {
@@ -60,15 +61,15 @@ function goArtistPage (event) {
 
 $('#content-search').on('click', '.link-artist', goArtistPage);
 
-function showAlbums (albums_obj) {
+function showAlbums (albums_obj, artist_name) {
   $('#content-search').empty();
-  $('#content-search').append('<h1>Albums</h1>')
+  $('#content-search').append('<h1>Albums ' + artist_name + '</h1>')
   $('#content-search').append('<ul id="list">');
   albums_obj.items.forEach(function (album) {
     if(album.images.length !== 0) {
       var image = '<div class="cover"><img src="' + album.images[0].url + '"/></div>'
       var name = '<div class="data-name"><h1>' + album.name + '</h1></div>'
-      var html = '<li><article class="box"><a href="" class="link link-album" data-id="' + album.id + '">' + image + name + '</a></article></li>';
+      var html = '<li><article class="box"><a href="" class="link link-album" data-id="' + album.id + '" data-name="' + album.name + '">' + image + name + '</a></article></li>';
       $('#list').append(html);
     };
   });
@@ -78,12 +79,13 @@ function showAlbums (albums_obj) {
 function goTracks (event) {
   event.preventDefault();
   var album_id = event.currentTarget.dataset.id;
+  var album_name = event.currentTarget.dataset.name;
 
   var request = $.get('https://api.spotify.com/v1/albums/' + album_id + '/tracks');
 
   function onSaveSuccess (response) {
     console.debug('BOOM track', response);
-    showTracks(response);
+    showTracks(response, album_name);
   }
 
   function onSaveFailure (err) {
@@ -96,8 +98,9 @@ function goTracks (event) {
 
 $('#content-search').on('click', '.link-album', goTracks);
 
-function showTracks (tracks_object) {
+function showTracks (tracks_object, album_name) {
   $('.modal-body').empty();
+  $('.modal-title').append('Tracks of ' + album_name);
   $('.modal-body').append('<ul id="list-modal">');
   tracks_object.items.forEach(function (track) {  
     var name = '<p>' + track.name + '</p>'
